@@ -1,10 +1,16 @@
 <template>
     <div class="imageLoader-container">
         <img :src="src" @load="loadImg">
+        <img :src="placeholder">
     </div>
 </template>
 <script>
 export default {  
+    data(){
+        return{
+            
+        }
+    },
     props:{
         src:{
             type:String,
@@ -29,10 +35,17 @@ export default {
 <style lang="less" scoped>
 @import "~@/styles/mixin.less";
     .imageLoader-container{
-        .self-center();
+        overflow: hidden;
+        width: 600px;
+        height: 500px;
+        position: relative; 
     }
     img{
-        width: 500px;
+        .self-fill();
+        width: 100%;
+        height: 100%;    
+        object-fit: cover;
+        filter: blur(12px);
     }
 
 </style>
