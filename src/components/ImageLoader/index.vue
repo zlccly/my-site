@@ -1,6 +1,6 @@
 <template>
     <div class="imageLoader-container">
-        <img :src="src" @load="loadImg">
+        <img  :src="src" @load="loadImg">
         <img :src="placeholder">
     </div>
 </template>
@@ -8,7 +8,7 @@
 export default {  
     data(){
         return{
-            
+           opacity:1 
         }
     },
     props:{
@@ -27,7 +27,14 @@ export default {
     },
     methods:{
         loadImg(){
+            this.opacity = 0;
             console.log("图片加载完成");
+
+        }
+    },
+    computed:{
+        getOpacity(){
+            return this.opacity;
         }
     }
 }
