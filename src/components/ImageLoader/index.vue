@@ -1,7 +1,7 @@
 <template>
     <div class="imageLoader-container">
-        <img class="placeholder" :src="placeholder" >
-        <img class="origin" :src="src" @load="loadImg">       
+        <img v-if="!everthingDone" class="placeholder" :src="placeholder" >
+        <img  :src="src" :style="{opacity:getOpacity,transition:`${duration}ms`}" @load="loadImg">       
 
     </div>
 </template>
@@ -9,7 +9,8 @@
 export default {  
     data(){
         return{
-           opacity:1 
+            opacityLoader:false ,
+            everthingDone:false
         }
     },
     props:{
@@ -28,14 +29,17 @@ export default {
     },
     methods:{
         loadImg(){
-            this.opacity = 0;
-            console.log("图片加载完成");
+            this.opacityLoader = true;  
+            setTimeout(() =>{
+                this.everthingDone = true;
+                this.$emit("load");
+            },this.duration);
 
         }
     },
     computed:{
         getOpacity(){
-            return this.opacity;
+            return this.opacityLoader ? 1 : 0;
         }
     }
 }
@@ -53,12 +57,8 @@ export default {
 
         }
         .placeholder{
-            opacity: 1;
             filter: blur(2vw);
 
-        }
-        .origin{
-            opacity: 0;
         }
 
     }
