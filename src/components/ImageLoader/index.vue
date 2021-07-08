@@ -1,7 +1,8 @@
 <template>
     <div class="imageLoader-container">
-        <img  :src="src" @load="loadImg">
-        <img :src="placeholder">
+        <img class="placeholder" :src="placeholder" >
+        <img class="origin" :src="src" @load="loadImg">       
+
     </div>
 </template>
 <script>
@@ -43,16 +44,24 @@ export default {
 @import "~@/styles/mixin.less";
     .imageLoader-container{
         overflow: hidden;
-        width: 600px;
-        height: 500px;
-        position: relative; 
-    }
-    img{
-        .self-fill();
         width: 100%;
-        height: 100%;    
-        object-fit: cover;
-        filter: blur(12px);
+        height: 100%;
+        position: relative; 
+        img{
+            .self-fill(); 
+            object-fit: cover;   
+
+        }
+        .placeholder{
+            opacity: 1;
+            filter: blur(2vw);
+
+        }
+        .origin{
+            opacity: 0;
+        }
+
     }
+    
 
 </style>
