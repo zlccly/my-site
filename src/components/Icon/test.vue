@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="test-container">
     <Icon type="home"/>
   </div>
 </template>
