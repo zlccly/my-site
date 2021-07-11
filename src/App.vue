@@ -1,36 +1,39 @@
 <template>
-  <div>
-    <h1>App组件</h1>
-    <Avatar url="https://img0.baidu.com/it/u=3311900507,1448170316&fm=26&fmt=auto&gp=0.jpg" :size="50"/>
-    <Icon type="blog"/>
-    <Pager :current="current" :total="total" @pageChange="handlePageChange"/>
+  <div class="app-container">
+    <Layout>
+      <template #left>
+        <div class="aside">
+          <SiteAside/>
+        </div>
+      </template>
+      <template #default>
+       中间主区域
+      </template>
+    </Layout>  
   </div>
+    
+    
 </template>
 
 <script>
-import Avatar from "./components/Avatar.vue"
-import Icon from "./components/Icon.vue"
-import Pager from "./components/Pager.vue"
-  export default {
-    name:"App",//如果组件没有在注册的时候指定名字，则使用该名字
-    components:{
-      Avatar,
-      Icon,
-      Pager
-    },
-    data(){
-      return{
-        current:15,
-        total:321
-      }
-    },
-    methods:{
-      handlePageChange(newPage){
-        console.log(newPage);
-        this.current = newPage;
-
-      }
-    }
-  
+import Layout from '@/components/Layout'
+import SiteAside from '@/components/SiteAside'
+export default{
+  components:{
+    Layout,
+    SiteAside
   }
+}
 </script>
+<style lang="less" scoped>
+@import "~@/styles/mixin.less";
+.app-container{
+  .self-fill(fixed);
+  background-color: lightgreen;
+  .aside{
+    width: 250px;
+    height: 100%;
+    background: #000;
+  }
+}
+</style>
