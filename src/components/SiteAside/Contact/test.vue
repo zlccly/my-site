@@ -5,6 +5,7 @@
 </template>
 <script>
 import Contact from './'
+import  '@/styles/gloable.less'
 export default{
     components:{
         Contact
@@ -13,7 +14,13 @@ export default{
 </script>
 <style lang="less" scoped>
     .test-container{
-        width: 200px;
+        // width: 600px;
+        // margin: 0 auto;
+        width: 400px;
+        height: 600px;
+        border: 2px solid red;
+        background: #000;
         margin: 0 auto;
+        padding-top: 200px;
     }
 </style>

@@ -26,7 +26,7 @@ export default {
     },
     methods:{
         handleMouseOver(){
-            console.log("鼠标移入");
+            
         }
     }
 }
