@@ -2,14 +2,12 @@
    <ul class="menu-container">
        <li v-for="item in items" :key="item.link" >
            
-           <a :href="item.link" :class="{
-               selected:isSelected(item)
-           }">
+           <RouterLink :exact="item.exact" :to="{name:item.name}">
                <div class="icon">
                    <Icon :type="item.icon"/>
                </div>
                <span>{{item.title}}</span>
-           </a>
+           </RouterLink>
        </li>
     </ul> 
 </template>
@@ -20,28 +18,31 @@ export default {
     data(){
         return{
             items:[{
-                link:"/",
+                name:"Home",
                 title:"首页",
-                icon:"home"
+                icon:"home",
+                exact:true
             },
             {
-                link:"/blog",
+                name:"Blog",
                 title:"文章",
                 icon:"blog",
-                startWith:true
+                exact:false
             },
             {
-                link:"/about",
+                name:"About",
                 title:"关于我",
-                icon:"info"
+                icon:"info",
+                exact:true
             },
             {
-                link:"/project",
+                name:"Project",
                 title:"项目&效果",
-                icon:"code"
+                icon:"code",
+                exact:true
             },
             {
-                link:"/message",
+                name:"Message",
                 title:"留言板",
                 icon:"chat"
             },
@@ -50,19 +51,6 @@ export default {
     },
     components:{
         Icon
-    },
-    methods:{
-        isSelected(item){
-            var link = item.link.toLowerCase();
-            var CurPathname = location.pathname.toLowerCase();
-            if(item.startWith){
-                return CurPathname.startsWith(link)
-            }
-            else{
-                return CurPathname === link;
-            }
-            
-        }
     }
     
 }
@@ -85,7 +73,7 @@ export default {
         &:hover{
             color: #fff;
         }
-        &.selected{
+        &.router-link-active{
             color: #fff;
             background-color: #2d2d2d;
         }
