@@ -1,18 +1,18 @@
 <template>
     <div class="contact-container">
-        <div class="github item">
+        <div class="github item" @mouseover="handleMouseOver">
             <Icon type="github"/>
             DuYi-Edu
         </div>
-        <div class="email item">
+        <div class="email item" @mouseover="handleMouseOver">
             <Icon type="mail"/>
             duyi@gmail
         </div>
-        <div class="qq item">
+        <div class="qq item" @mouseover="handleMouseOver">
             <Icon type="qq"/>
             1346344@qq.com
         </div>
-        <div class="weixin item">
+        <div class="weixin item" @mouseover="handleMouseOver">
             <Icon type="weixin"/>
             duyi666
         </div>
@@ -23,6 +23,11 @@ import Icon from '../Icon';
 export default {
     components:{
         Icon
+    },
+    methods:{
+        handleMouseOver(){
+            console.log("鼠标移入");
+        }
     }
 }
 </script>
