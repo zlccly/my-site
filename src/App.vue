@@ -29,7 +29,7 @@ export default{
 @import "~@/styles/mixin.less";
 .app-container{
   .self-fill(fixed);
-  background-color: lightgreen;
+  // background-color: lightgreen;
   .aside{
     width: 250px;
     height: 100%;
