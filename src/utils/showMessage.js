@@ -23,4 +23,14 @@ export default function showMessage(content, type='info', duration=2000, contain
         }
     }
     container.appendChild(div);
+    div.clientWidth;
+    div.style.opacity = 1;
+    div.style.transform = `translate(-50%, -50%)`;
+    setTimeout(()=>{
+        div.style.opacity = 0;
+        div.style.transform = `translate(-50%, -50%) translateY(-15px)`;
+        div.addEventListener("transitionend",function(){
+            div.remove();
+        },{once:true})
+    },duration)
 }

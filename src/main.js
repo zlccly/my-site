@@ -4,10 +4,6 @@ import "./styles/gloable.less"
 import router from './router'
 
 Vue.config.productionTip = false
-import showMessage from '@/utils/showMessage'
-window.showMessage = showMessage;
-showMessage('sjdfliasjdf',"success");
-
 new Vue({
   router,
   render: h => h(App),
