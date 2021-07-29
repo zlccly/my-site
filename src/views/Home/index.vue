@@ -1,8 +1,8 @@
 <template>
    <div class="home-container" ref="container" @wheel="handleWheel">
-      <ul class="carouselitem-container" :style="{marginTop}">
+      <ul class="carouselitem-container" :style="{marginTop}" @transitionend="handletransiton">
          <li v-for="item in banners" :key="item.id">
-            <Carouselitem/>
+            <Carouselitem :carouse="item"/>
          </li>
       </ul>
       
@@ -31,7 +31,8 @@ export default {
       return {
          banners: [],
          index: 0,
-         containerHeight: 0
+         containerHeight: 0,
+         switching: false
       }
    },
   methods:{
@@ -39,9 +40,24 @@ export default {
       this.index =  i;
      },
      handleWheel(e){
-        console.log(e);
-        console.log(e.deltaY);
+         if(this.switching){
+            return
+         }
+       
+         if(e.deltaY === 125 && this.index < this.banners.length-1){
+            this.switching = true;
+            this.index++;
+         }
+         else if(e.deltaY === -125 && this.index > 0){
+            this.switching = true;
+            this.index--;
+         }
+         this.switching = false;
         
+     },
+     handletransiton(){
+        this.switching = false;
+
      }
   },
    computed:{
