@@ -1,5 +1,5 @@
 <template>
-   <div class="home-container" ref="container" @wheel="handleWheel">
+   <div class="home-container" ref="container" @wheel="handleWheel" >
       <ul class="carouselitem-container" :style="{marginTop}" @transitionend="handletransiton">
          <li v-for="item in banners" :key="item.id">
             <Carouselitem :carouse="item"/>
@@ -43,12 +43,13 @@ export default {
          if(this.switching){
             return
          }
+        
        
-         if(e.deltaY === 125 && this.index < this.banners.length-1){
+         if(e.deltaY > 0 && this.index < this.banners.length-1){
             this.switching = true;
             this.index++;
          }
-         else if(e.deltaY === -125 && this.index > 0){
+         else if(e.deltaY < 0 && this.index > 0){
             this.switching = true;
             this.index--;
          }
@@ -57,6 +58,10 @@ export default {
      },
      handletransiton(){
         this.switching = false;
+     },
+     handleResize(){
+         this.containerHeight = this.$refs.container.clientHeight;
+
 
      }
   },
@@ -71,7 +76,11 @@ export default {
    },
    mounted(){
       this.containerHeight = this.$refs.container.clientHeight;
-   }
+      window.addEventListener('resize', this.handleResize)
+   },
+   destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -79,7 +88,7 @@ export default {
 @import '~@/styles/var.less';
 @import '~@/styles/mixin.less';
 .home-container{
-   background: black;
+   // background: black;
    position: relative;
    top: 0;
    height: 100%;
