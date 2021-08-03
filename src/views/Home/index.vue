@@ -1,6 +1,8 @@
 <template>
-   <div class="home-container" ref="container" @wheel="handleWheel" >
-      <ul class="carouselitem-container" :style="{marginTop}" @transitionend="handletransiton">
+   <div class="home-container"
+    ref="container" 
+    @wheel="handleWheel">
+      <ul class="carousel-container" :style="{marginTop}" @transitionend="handletransiton">
          <li v-for="item in banners" :key="item.id">
             <Carouselitem :carouse="item"/>
          </li>
@@ -43,8 +45,6 @@ export default {
          if(this.switching){
             return
          }
-        
-       
          if(e.deltaY > 0 && this.index < this.banners.length-1){
             this.switching = true;
             this.index++;
@@ -61,12 +61,11 @@ export default {
      },
      handleResize(){
          this.containerHeight = this.$refs.container.clientHeight;
-
-
      },
      handleResize(){
         this.containerHeight = this.$refs.container.clientHeight;
-     }
+     },
+    
   },
    computed:{
       marginTop(){
@@ -93,20 +92,21 @@ export default {
 .home-container{
    // background: black;
    position: relative;
-   top: 0;
    height: 100%;
    width: 100%;
    overflow: hidden;
+  
+   
+   
    ul{
       margin: 0;
       padding: 0;
       list-style: none;
    }
-   .carouselitem-container{
+   .carousel-container{
       width: 100%;
       height: 100%;
       transition: 500ms;
-
       li{
          width: 100%;
          height: 100%;
@@ -158,7 +158,7 @@ export default {
    .indicator{
       position: absolute;
       right: 20px;
-      top: 50%;
+      left: auto;
       transform: translateY(-50%);
       li{
          width: 7px;

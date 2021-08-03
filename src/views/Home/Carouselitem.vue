@@ -1,6 +1,6 @@
 <template>
-    <div class="carouselitem-container">
-        <div class="imageLoader">
+    <div class="carousel-item-container"  ref="container" @mousemove="handleMouse" @mouseleave="handleLeave">
+        <div class="imageLoader"  ref="image"  :style="imagePosition">
             <ImageLoader :src="carouse.bigImg" :placeholder="carouse.midImg" @load="showWords"/>
         </div>
         <div class="title" ref="title">{{ carouse.title }}</div>
@@ -17,13 +17,22 @@ export default {
     data(){
         return{
             titleWidth: 0,
-            descWidth: 0
+            descWidth: 0,
+            containerSize: null,
+            innerSize: null,
+            mouseX: 0,
+            mouseY: 0
 
         }
     },
     mounted(){
         this.titleWidth = this.$refs.title.clientWidth;
         this.descWidth =  this.$refs.desc.clientWidth;
+        this.setSize();
+        this.mouseX = this.center.x;
+        this.mouseY = this.center.y;
+        window.addEventListener('resize', this.setSize);
+        
     },
     methods:{
         showWords(){
@@ -41,39 +50,93 @@ export default {
             this.$refs.desc.style.transition = '2s 1s';     
             this.$refs.desc.style.width = this.descWidth + 'px';
 
+        },
+        setSize(){
+            this.containerSize = {
+                width: this.$refs.container.clientWidth,
+                height: this.$refs.container.clientHeight
+            },
+            this.innerSize = {
+                width: this.$refs.image.clientWidth,
+                height: this.$refs.image.clientHeight
+            }
+        },
+        handleMouse(e){
+            const rect = this.$refs.container.getBoundingClientRect();
+            this.mouseX = e.clientX - rect.left;
+            this.mouseY = e.clientY - rect.top;
+            // console.log(this.mouseX, this.mouseY);
+        },
+        handleLeave(){
+            this.mouseX = this.center.x;
+            this.mouseY = this.center.y;
         }
+    },
+    computed:{
+        imagePosition(){
+            if(!this.innerSize || !this.containerSize){
+                return{}
+            }
+            const extraWidth = this.innerSize.width - this.containerSize.width;
+            const extraHeight = this.innerSize.height - this.containerSize.height;
+            const left = -extraWidth / this.containerSize.width * this.mouseX;
+            const top = -extraHeight / this.containerSize.height * this.mouseY;
+            return{
+                transform: `translate(${left}px,${top}px)`
+                // left: left + 'px',
+                // top: top + 'px'
+            }
+        },
+        center(){
+            return{
+                x: this.containerSize.width / 2,
+                y: this.containerSize.height / 2,
+
+            }
+        }
+    },
+    destroyed(){
+        window.removeEventListener('resize', this.setSize);
     }
 }
 </script>
 <style lang="less" scoped>
 @import "~@/styles/var.less";
-.carouselitem-container{
+.carousel-item-container{
+    height: 100%;
+    width: 100%;
     position: relative;
-    .imageLoader{
-        height: 100%;
-        width: 100%;
-    }
-    .title,.desc{
-        position: absolute;
-        left: 30px;
-        color: #fff;
-        letter-spacing: 3px;
-        text-shadow: 1px 0 0 rgba(0, 0, 0, 0.5), -1px 0 0 rgba(0, 0, 0, 0.5),
-    0 1px 0 rgba(0, 0, 0, 0.5), 0 -1px 0 rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-    .title{
-        top: calc(50% - 40px);
-        font-size: 2em;
-    }
-    .desc{
-        
-        top: calc(50% + 20px);
-        font-size: 1.2em;
-        color: lighten(@gray, 20%);
-    }
+    color: #fff;
+    overflow: hidden;
+}
+.imageLoader{
+    width: 110%;
+    height: 110%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: 0.3s;
+}   
+.title,.desc{
+    position: absolute;
+    left: 30px;
+    color: #fff;
+    letter-spacing: 3px;
+    text-shadow: 1px 0 0 rgba(0, 0, 0, 0.5), -1px 0 0 rgba(0, 0, 0, 0.5),
+0 1px 0 rgba(0, 0, 0, 0.5), 0 -1px 0 rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.title{
+    top: calc(50% - 40px);
+    font-size: 2em;
+}
+.desc{
+    
+    top: calc(50% + 20px);
+    font-size: 1.2em;
+    color: lighten(@gray, 20%);
 }
 
 </style>
