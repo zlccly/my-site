@@ -44,11 +44,11 @@ export default {
             return
          }
        
-         if(e.deltaY === 125 && this.index < this.banners.length-1){
+         if(e.deltaY > 0 && this.index < this.banners.length-1){
             this.switching = true;
             this.index++;
          }
-         else if(e.deltaY === -125 && this.index > 0){
+         else if(e.deltaY < 0 && this.index > 0){
             this.switching = true;
             this.index--;
          }
@@ -58,6 +58,9 @@ export default {
      handletransiton(){
         this.switching = false;
 
+     },
+     handleResize(){
+        this.containerHeight = this.$refs.container.clientHeight;
      }
   },
    computed:{
@@ -71,6 +74,7 @@ export default {
    },
    mounted(){
       this.containerHeight = this.$refs.container.clientHeight;
+      window.addEventListener('resize', this.handleResize)
    }
 }
 </script>
