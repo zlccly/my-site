@@ -11,8 +11,8 @@
       <div class="icon icon-up" v-show="index > 0" @click="switchTo(index-1)">
          <Icon type="arrowUp"/>
       </div>
+      <Loading v-if="isLoading"/>
       <div class="icon icon-down" v-show="index < banners.length-1" @click="switchTo(index+1)">
-         
          <Icon type="arrowDown"/>
       </div>
       <ul class="indicator">
@@ -24,17 +24,20 @@
 import {getBanners} from '@/api/banner'
 import Carouselitem from './Carouselitem.vue'
 import Icon from '@/components/Icon'
+import Loading from '@/components/Loading'
 export default {
    components:{
       Carouselitem,
-      Icon
+      Icon,
+      Loading
    },
    data(){  
       return {
          banners: [],
          index: 0,
          containerHeight: 0,
-         switching: false
+         switching: false,
+         isLoading: true
       }
    },
   methods:{
@@ -54,7 +57,6 @@ export default {
             this.index--;
          }
          this.switching = false;
-        
      },
      handletransiton(){
         this.switching = false;
@@ -75,6 +77,7 @@ export default {
    },
     async created(){
       this.banners = await getBanners();
+      this.isLoading = false;
    },
    mounted(){
       this.containerHeight = this.$refs.container.clientHeight;
