@@ -1,11 +1,16 @@
 <template>
-  <div class="home-container" v-loading='isLoading' ref="container" @wheel="handleWheel">
+  <div
+    class="home-container"
+    v-loading="isLoading"
+    ref="container"
+    @wheel="handleWheel"
+  >
     <ul
       class="carousel-container"
       :style="{ marginTop }"
       @transitionend="handletransiton"
     >
-      <li v-for="item in banners" :key="item.id">
+      <li v-for="item in data" :key="item.id">
         <Carouselitem :carouse="item" />
       </li>
     </ul>
@@ -15,14 +20,14 @@
     </div>
     <div
       class="icon icon-down"
-      v-show="index < banners.length - 1"
+      v-show="index < data.length - 1"
       @click="switchTo(index + 1)"
     >
       <Icon type="arrowDown" />
     </div>
     <ul class="indicator">
       <li
-        v-for="(item, i) in banners"
+        v-for="(item, i) in data"
         :key="item.id"
         @click="switchTo(i)"
         :class="{ active: i === index }"
@@ -34,18 +39,19 @@
 import { getBanners } from "@/api/banner";
 import Carouselitem from "./Carouselitem.vue";
 import Icon from "@/components/Icon";
+import fetchData from "@/mixins/fetchData";
+console.log(Carouselitem);
 export default {
   components: {
     Carouselitem,
     Icon,
   },
+  mixins: [fetchData([])],
   data() {
     return {
-      banners: [],
       index: 0,
       containerHeight: 0,
       switching: false,
-      isLoading: true,
     };
   },
   methods: {
@@ -56,7 +62,7 @@ export default {
       if (this.switching) {
         return;
       }
-      if (e.deltaY > 0 && this.index < this.banners.length - 1) {
+      if (e.deltaY > 0 && this.index < this.data.length - 1) {
         this.switching = true;
         this.index++;
       } else if (e.deltaY < 0 && this.index > 0) {
@@ -71,15 +77,14 @@ export default {
     handleResize() {
       this.containerHeight = this.$refs.container.clientHeight;
     },
+    async fetchData() {
+      return await getBanners();
+    },
   },
   computed: {
     marginTop() {
       return -this.index * this.containerHeight + "px";
     },
-  },
-  async created() {
-    this.banners = await getBanners();
-    this.isLoading = false;
   },
   mounted() {
     this.containerHeight = this.$refs.container.clientHeight;
