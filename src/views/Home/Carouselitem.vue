@@ -1,5 +1,5 @@
 <template>
-    <div class="carousel-item-container"  ref="container" @mousemove="handleMouse" @mouseleave="handleLeave">
+    <div class="carousel-item-container"  ref="container" @mousemove="handleMouseMove" @mouseleave="handleLeave">
         <div class="imageLoader"  ref="image"  :style="imagePosition">
             <ImageLoader :src="carouse.bigImg" :placeholder="carouse.midImg" @load="showWords"/>
         </div>
@@ -61,7 +61,7 @@ export default {
                 height: this.$refs.image.clientHeight
             }
         },
-        handleMouse(e){
+        handleMouseMove(e){
             const rect = this.$refs.container.getBoundingClientRect();
             this.mouseX = e.clientX - rect.left;
             this.mouseY = e.clientY - rect.top;

@@ -71,9 +71,6 @@ export default {
     handleResize() {
       this.containerHeight = this.$refs.container.clientHeight;
     },
-    handleResize() {
-      this.containerHeight = this.$refs.container.clientHeight;
-    },
   },
   computed: {
     marginTop() {
@@ -94,7 +91,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "~@/styles/gloable.less";
 @import "~@/styles/var.less";
 @import "~@/styles/mixin.less";
 .home-container {
@@ -109,73 +105,75 @@ export default {
     padding: 0;
     list-style: none;
   }
-  .carousel-container {
+}
+.carousel-container {
+  width: 100%;
+  height: 100%;
+  transition: 500ms;
+  li {
     width: 100%;
     height: 100%;
-    transition: 500ms;
-    li {
-      width: 100%;
-      height: 100%;
+  }
+}
+.icon {
+  position: absolute;
+  @gap: 25px;
+  left: 50%;
+  font-size: 30px;
+  color: @gray;
+  cursor: pointer;
+  transform: translateX(-50%);
+  &.icon-up {
+    top: @gap;
+    animation: jump-up 2s infinite;
+  }
+  &.icon-down {
+    bottom: @gap;
+    animation: jump-down 2s infinite;
+  }
+  @jump: 5px;
+  @keyframes jump-up {
+    0% {
+      transform: translate(-50%, @jump);
+    }
+    50% {
+      transform: translate(-50%, -@jump);
+    }
+    100% {
+      transform: translate(-50%, @jump);
     }
   }
-  .icon {
-    position: absolute;
-    @gap: 25px;
-    left: 50%;
-    font-size: 30px;
-    color: @gray;
+  @keyframes jump-down {
+    0% {
+      transform: translate(-50%, -@jump);
+    }
+    50% {
+      transform: translate(-50%, @jump);
+    }
+    100% {
+      transform: translate(-50%, -@jump);
+    }
+  }
+}
+.indicator {
+  position: absolute;
+  // .self-center();
+  right: 20px;
+  left: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  li {
+    width: 7px;
+    height: 7px;
+    background: @words;
+    border-radius: 50%;
+    margin-bottom: 10px;
     cursor: pointer;
-    transform: translateX(-50%);
-    &.icon-up {
-      top: @gap;
-      animation: jump-up 2s infinite;
-    }
-    &.icon-down {
-      bottom: @gap;
-      animation: jump-down 2s infinite;
-    }
-    @jump: 5px;
-    @keyframes jump-up {
-      0% {
-        transform: translate(-50%, @jump);
-      }
-      50% {
-        transform: translate(-50%, -@jump);
-      }
-      100% {
-        transform: translate(-50%, @jump);
-      }
-    }
-    @keyframes jump-down {
-      0% {
-        transform: translate(-50%, -@jump);
-      }
-      50% {
-        transform: translate(-50%, @jump);
-      }
-      100% {
-        transform: translate(-50%, -@jump);
-      }
-    }
-  }
-  .indicator {
-    position: absolute;
-    right: 20px;
-    left: auto;
-    transform: translateY(-50%);
-    li {
-      width: 7px;
-      height: 7px;
-      background: @words;
-      border-radius: 50%;
-      margin-bottom: 10px;
-      cursor: pointer;
-      border: 1px solid #fff;
-      box-sizing: border-box;
+    border: 1px solid #fff;
+    box-sizing: border-box;
 
-      &.active {
-        background: #fff;
-      }
+    &.active {
+      background: #fff;
     }
   }
 }
