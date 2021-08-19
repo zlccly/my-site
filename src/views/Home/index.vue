@@ -40,7 +40,6 @@ import { getBanners } from "@/api/banner";
 import Carouselitem from "./Carouselitem.vue";
 import Icon from "@/components/Icon";
 import fetchData from "@/mixins/fetchData";
-console.log(Carouselitem);
 export default {
   components: {
     Carouselitem,

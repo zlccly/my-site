@@ -15,3 +15,13 @@ new Vue({
   router,
   render: h => h(App),
 }).$mount('#app')
+
+
+//测试
+import * as blogApi from './api/blog'
+blogApi.getBlogTypes().then(r => {
+  console.log('博客分类', r);
+})
+blogApi.getBlogs(1, 5, 3).then(r => {
+  console.log('博客列表', r)
+})
