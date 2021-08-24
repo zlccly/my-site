@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-list-container">
+  <div class="blog-list-container" v-loading = "isLoading">
     <ul>
       <li v-for="item in data.rows" :key="item.id">
         <div class="thumb" v-if="item.thumb">
@@ -16,7 +16,7 @@
             <h2>{{ item.title }}</h2>
           </a>
           <div class="aside">
-            <span>日期：{{ item.createDate}}</span>
+            <span>日期：{{ formatDate(item.createDate)}}</span>
             <span>浏览：{{item.scanNumber}}</span>
             <span>评论：{{item.commentNumber}}</span>
             <a href="/article/cate/${item.category.id}" class="">{{item.category.name}}</a>
@@ -35,15 +35,23 @@
 import Pager from '@/components/Pager' 
 import fetchData from '@/mixins/fetchData'
 import {getBlogs} from '@/api/blog'
+import {formatDate} from '@/utils'
 export default {
   components:{
     Pager,
   },
   mixins:[fetchData({})],
+  computed:{
+    routeInfo(){
+      // const params = this.$route.params;
+      // console.log(params);
+    }
+  },
   methods:{
+    formatDate,
     async fetchData(){
       return await  getBlogs();
-    }
+    },
   }
   
 }
