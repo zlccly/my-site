@@ -22,17 +22,17 @@ Mock.mock(/^\/api\/blog(\?.+)?$/, 'get', function (options) {
             "total|2000-3000": 0,
             [`rows|${query.limit || 10}`]: [{
                 id: '@guid',
-                title:"@ctitle",
-                description:'@cparagraph(1,10)',
-                category:{
-                   "id|1-10":0,
-                   name:'分类@id', 
+                title: "@ctitle(1, 50)",
+                description: '@cparagraph(1,10)',
+                category: {
+                    "id|1-10": 0,
+                    name: '分类@id',
                 },
                 "scanNumber|0-3000": 0,
-				"commentNumber|0-300": 0,
-				thumb: Mock.Random.image('300x250', '#50B347', '#FFF', 'Random Image'),
-				createDate: "@date('T')"
+                "commentNumber|0-300": 0,
+                "thumb|1": [Mock.Random.image('300x250', '#50B347', '#FFF', 'Random Image'), null],
+                createDate: "@date('T')"
             }]
         }
     })
-}) 
+})

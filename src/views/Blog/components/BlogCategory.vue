@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+    <h1>BlogCategory</h1>
   </div>
 </template>
 <script>
