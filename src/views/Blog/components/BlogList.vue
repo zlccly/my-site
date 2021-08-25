@@ -1,14 +1,10 @@
 <template>
-  <div class="blog-list-container" v-loading = "isLoading">
+  <div class="blog-list-container" v-loading="isLoading">
     <ul>
       <li v-for="item in data.rows" :key="item.id">
         <div class="thumb" v-if="item.thumb">
           <a href="">
-            <img 
-              :src="item.thumb"
-              :alt="item.title"
-              :title="item.title"
-            />
+            <img :src="item.thumb" :alt="item.title" :title="item.title" />
           </a>
         </div>
         <div class="main">
@@ -16,45 +12,70 @@
             <h2>{{ item.title }}</h2>
           </a>
           <div class="aside">
-            <span>日期：{{ formatDate(item.createDate)}}</span>
-            <span>浏览：{{item.scanNumber}}</span>
-            <span>评论：{{item.commentNumber}}</span>
-            <a href="/article/cate/${item.category.id}" class="">{{item.category.name}}</a>
+            <span>日期：{{ formatDate(item.createDate) }}</span>
+            <span>浏览：{{ item.scanNumber }}</span>
+            <span>评论：{{ item.commentNumber }}</span>
+            <a href="/article/cate/${item.category.id}" class="">{{
+              item.category.name
+            }}</a>
           </div>
           <div class="desc">
-            {{item.description}}
+            {{ item.description }}
           </div>
         </div>
       </li>
     </ul>
     <!-- 分页放到这里 -->
-    <Pager/>
+    <Pager
+      v-if="data.total"
+      :current="routeInfo.page"
+      :total="data.total"
+      :limit="routeInfo.limit"
+      :visibleNumber="
+        data.total / routeInfo.limit < 10 ? data.total / routeInfo.limit : 10
+      "
+      @pageChange="handlePageChange"
+    />
   </div>
 </template>
 <script>
-import Pager from '@/components/Pager' 
-import fetchData from '@/mixins/fetchData'
-import {getBlogs} from '@/api/blog'
-import {formatDate} from '@/utils'
+import Pager from "@/components/Pager";
+import fetchData from "@/mixins/fetchData";
+import { getBlogs } from "@/api/blog";
+import { formatDate } from "@/utils";
 export default {
-  components:{
+  components: {
     Pager,
   },
-  mixins:[fetchData({})],
-  computed:{
-    routeInfo(){
-      // const params = this.$route.params;
-      // console.log(params);
-    }
-  },
-  methods:{
-    formatDate,
-    async fetchData(){
-      return await  getBlogs();
+  mixins: [fetchData({})],
+  computed: {
+    routeInfo() {
+      console.log("1");
+      const categoryId = +this.$route.params.categoryId || -1;
+      const page = +this.$route.query.page || 1;
+      const limit = +this.$route.query.limit || 10;
+      return {
+        categoryId,
+        page,
+        limit,
+      };
     },
-  }
-  
-}
+  },
+  methods: {
+    handlePageChange(page) {
+      console.log(page);
+      this.routeInfo.page = page;
+    },
+    formatDate,
+    async fetchData() {
+      return await getBlogs(
+        this.routeInfo.page,
+        this.routeInfo.limit,
+        this.routeInfo.categoryId
+      );
+    },
+  },
+};
 </script>
 <style scoped lang="less">
 @import "~@/styles/var.less";
