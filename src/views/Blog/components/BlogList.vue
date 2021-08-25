@@ -50,7 +50,6 @@ export default {
   mixins: [fetchData({})],
   computed: {
     routeInfo() {
-      console.log("1");
       const categoryId = +this.$route.params.categoryId || -1;
       const page = +this.$route.query.page || 1;
       const limit = +this.$route.query.limit || 10;
@@ -63,8 +62,28 @@ export default {
   },
   methods: {
     handlePageChange(page) {
-      console.log(page);
-      this.routeInfo.page = page;
+      const query = {
+        page,
+        limit: this.routeInfo.limit,
+      };
+      //若果有分类：跳转地址为/artical?page=page&limit=routeInfo.limit
+      if (this.routeInfo.categoryId === -1) {
+        this.$router.push({
+          name: "Blog",
+          query,
+        });
+      }
+      else{
+        this.$router.push({
+          name: "CategoryBlog",
+          params: {
+            categoryId: this.routeInfo.categoryId,
+          },
+          query,
+        });
+      }
+
+      //如有没有分类：跳转地址为/artical/cate/:categoryId?page=page&limit=routeInfo.limit
     },
     formatDate,
     async fetchData() {

@@ -5,7 +5,6 @@
         <a @click="handleClick(n)" v-for="(n, i) in numbers" :key="i" :class="{active:n===current}">{{n}}</a>
         <a @click="handleClick(current+1)" :class="{disabled:current===pagerNumber}">&gt;&gt;</a>
         <a @click="handleClick(pagerNumber)" :class="{disabled:current===pagerNumber}">&gt;&gt;|</a>
-        <button @click="handleClick($event)">点击按钮</button>
     </div>  
 </template>
 <style lang="less" scoped>
