@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-list-container" v-loading="isLoading">
+  <div class="blog-list-container" ref="container" v-loading="isLoading">
     <ul>
       <li v-for="item in data.rows" :key="item.id">
         <div class="thumb" v-if="item.thumb">
@@ -46,6 +46,14 @@ import { formatDate } from "@/utils";
 export default {
   components: {
     Pager,
+  },
+  watch:{
+    async $route(){
+      this.isLoading = true;
+      this.$refs.container.scrollTop = 0;
+      this.data = await this.fetchData();
+      this.isLoading = false;
+    }
   },
   mixins: [fetchData({})],
   computed: {
@@ -106,6 +114,7 @@ export default {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  scroll-behavior: smooth;
   ul {
     list-style: none;
     margin: 0;
