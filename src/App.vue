@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Avatar url="https://p.qqan.com/up/2024-3/202432014410487.jpg" />
+    <Avatar url="https://p.qqan.com/up/2024-3/202432011399416.jpg"  :size="80"/>
   </div>
 </template>
 
