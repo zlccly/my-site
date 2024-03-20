@@ -1,16 +1,21 @@
 <template>
   <div id="app">
-    <Avatar url="https://p.qqan.com/up/2024-3/202432011399416.jpg"  :size="80"/>
+    <Icon type="home" />
   </div>
 </template>
 
 <script>
-import Avatar from './components/Avatar.vue'
+import Icon from "./components/Icon.vue"
 
 export default {
   name: "App",
+  data() {
+    return {
+    }
+  },
   components: {
-    Avatar
+    Icon
   }
+
 }
 </script>
