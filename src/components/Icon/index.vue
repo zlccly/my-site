@@ -1,5 +1,5 @@
 <template>
-  <i class="iconfont" :class="fontClass"></i>
+  <i class="iconfont icon-container" :class="fontClass"></i>
 </template>
 
 <script>
@@ -22,6 +22,7 @@ const classMap = {
   empty: "iconempty",
   chat: "iconliuyan",
 };
+export const types = Object.keys(classMap);
 export default {
   props: {
     type: {
@@ -39,7 +40,6 @@ export default {
 </script>
 
 <style scoped>
-/* 使用当前网站的协议 */
 @import "//at.alicdn.com/t/font_2164449_nalfgtq7il.css";
 .iconfont {
   color: inherit;
