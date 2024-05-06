@@ -1,9 +1,9 @@
 <template>
   <nav class="menu-container">
-    <a
+    <router-link
       v-for="item in items"
       :key="item.link"
-      :href="item.link"
+      :to="item.link"
       :class="{
         selected: isSelected(item),
       }"
@@ -12,7 +12,7 @@
         <Icon :type="item.icon" />
       </div>
       <span>{{ item.title }}</span>
-    </a>
+    </router-link>
   </nav>
 </template>
 
