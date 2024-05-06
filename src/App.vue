@@ -1,29 +1,36 @@
 <template>
-  <div id="app">
-    <Avatar url="http://mdrs.yuanjin.tech/img/20201031141350.jpg" :size="300" />
+  <div class="app-container">
+    <Layout>
+      <template #left>
+        <div class="aside">
+          <SiteAside />
+        </div>
+      </template>
+      <template #default>
+        中间主区域
+      </template>
+    </Layout>
   </div>
 </template>
 
 <script>
-import Avatar from "./components/Avatar"
-
+import Layout from "./components/Layout";
+import SiteAside from "./components/SiteAside";
 export default {
-  name: "App",
-  data() {
-    return {
-      current: 1,
-      total: 302,
-    }
-  },
   components: {
-    Avatar
+    Layout,
+    SiteAside,
   },
-  methods: {
-    handlePageChange(newPage) {
-      this.current = newPage;
-      console.log("加载当前页数据");
-    },
-  },
-
-}
+};
 </script>
+
+<style lang="less" scoped>
+@import "~@/styles/mixin.less";
+.app-container {
+  .self-fill(fixed);
+}
+.aside {
+  width: 250px;
+  height: 100%;
+}
+</style>

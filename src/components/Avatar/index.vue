@@ -1,8 +1,12 @@
 <template>
-  <img class="avatar-img" :src="url" :style="{
-    width: size + 'px',
-    height: size + 'px',
-  }" />
+  <img
+    class="avatar-container"
+    :src="url"
+    :style="{
+      width: size + 'px',
+      height: size + 'px',
+    }"
+  />
 </template>
 
 <script>
@@ -14,7 +18,7 @@ export default {
     },
     size: {
       type: Number,
-      default: 150
+      default: 150,
     },
   },
 };
@@ -22,7 +26,7 @@ export default {
 
 <style scoped>
 /* 带有作用域的样式 */
-.avatar-img {
+.avatar-container {
   border-radius: 50%;
   object-fit: cover;
   display: block;
